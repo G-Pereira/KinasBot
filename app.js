@@ -306,7 +306,7 @@ function receivedMessage(event) {
             case 'account linking':
                 sendAccountLinking(senderID);
                 break;
-            case 'Qual a programação para hoje à noite?':
+            case 'qual a programação para hoje à noite na rtp1?':
                 var mes = "21:53 - Miúdo Graúdo T1 E5\n" +
                     "22:39 - Portugueses pelo Mundo\n" +
                     "23:33 - Qualificação Mundial 2018 - Resumos\n" +
@@ -315,7 +315,16 @@ function receivedMessage(event) {
                     "02:22 - O Princípio da Incerteza";
                 sendTextMessage(senderID, mes);
                 break;
-
+            case 'quanto custa o arroz?':
+                var m2 = "1.º CACAROLA - Arroz Carolino Extra Longo - 1.12€"+
+                "2.º CIGALA - Arroz Vaporizado - 1.19€"+
+                "3.º SALUDAES - Arroz Carolino Extra Longo - 1.07€"+
+                "4.º ORIENTE - Arroz Extra Longo Branqueado Oriente - 1.09€"+
+                "5.º ORIENTE - Arroz Extra Longo Branqueado Oriente - 1.09€";
+                break;
+            case 'como está o tempo lá fora?':
+                var m3 = "Atualmente, o tempo está muito nublado ea probabilidade de chuva é: 0%";
+                break;
             default:
                 sendTextMessage(senderID, messageText);
         }
