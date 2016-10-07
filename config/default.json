@@ -1,6 +1,6 @@
 {
-    "appSecret": "9109fd129de6f6f1042a1efb21406cef",
-    "pageAccessToken": "EAAUHfKxT5zkBAIHvQnvZBpiZCvIElT4YZBbwll4izty3hwyuUyzlsuh3uNUlyYigMpT3ZA7mN2MiHfVekYqxIeVAmjrmxYyGP8ZA57kAHPmSbbOirb9Tb8jFakw0U3QDsCVqVymaLdr1IakEuHUaW5mT7YLbAspoltLAThwSVNAZDZD",
+    "appSecret": "c66ba9b65bf62e8a1c3ed4f99401fd09",
+    "pageAccessToken": "EAACgTZC22ZBm8BAHZBFMu6FkBPPxMCLdneDZB8mwjB71qfVLkJynJSkVZBRMseNxs3td2qCsU442TDDEDVu6zclc3KGBlVc5j9W8fC3LR0Ae9FmVzOI12zmgoCsibrMCqNKoshIBdbsvA0ujYUDsZAFLtLEc63ulkXZCZAnyIOoFEgZDZD",
     "validationToken": "kinas",
     "serverURL": "https://kinas.herokuapp.com"
 }
