@@ -306,6 +306,14 @@ function receivedMessage(event) {
       case 'account linking':
         sendAccountLinking(senderID);
         break;
+      case 'Qual a programação para hoje à noite?':
+        var mes = "21:53 - Miúdo Graúdo T1 E5\n"+
+        "22:39 - Portugueses pelo Mundo\n"+
+        "23:33 - Qualificação Mundial 2018 - Resumos\n"+
+        "00:13 - Treze\n"+
+        "01:36 - Os Seguidores (The Following) T3 E10\n"+
+        "02:22 - O Princípio da Incerteza";
+        sendTextMessage(senderID, mes);
 
       default:
         sendTextMessage(senderID, messageText);
