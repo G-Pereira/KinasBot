@@ -307,23 +307,25 @@ function receivedMessage(event) {
                 sendAccountLinking(senderID);
                 break;
             case 'qual a programação para hoje à noite na rtp1?':
-                var mes = "21:53 - Miúdo Graúdo T1 E5\n" +
+                var m1 = "21:53 - Miúdo Graúdo T1 E5\n" +
                     "22:39 - Portugueses pelo Mundo\n" +
                     "23:33 - Qualificação Mundial 2018 - Resumos\n" +
                     "00:13 - Treze\n" +
                     "01:36 - Os Seguidores (The Following) T3 E10\n" +
                     "02:22 - O Princípio da Incerteza";
-                sendTextMessage(senderID, mes);
+                sendTextMessage(senderID, m1);
                 break;
             case 'quanto custa o arroz?':
-                var m2 = "1.º CACAROLA - Arroz Carolino Extra Longo - 1.12€"+
-                "2.º CIGALA - Arroz Vaporizado - 1.19€"+
-                "3.º SALUDAES - Arroz Carolino Extra Longo - 1.07€"+
-                "4.º ORIENTE - Arroz Extra Longo Branqueado Oriente - 1.09€"+
-                "5.º ORIENTE - Arroz Extra Longo Branqueado Oriente - 1.09€";
+                var m2 = "1.º CACAROLA - Arroz Carolino Extra Longo - 1.12€" +
+                    "2.º CIGALA - Arroz Vaporizado - 1.19€" +
+                    "3.º SALUDAES - Arroz Carolino Extra Longo - 1.07€" +
+                    "4.º ORIENTE - Arroz Extra Longo Branqueado Oriente - 1.09€" +
+                    "5.º ORIENTE - Arroz Extra Longo Branqueado Oriente - 1.09€";
+                sendTextMessage(senderID, m2);
                 break;
             case 'como está o tempo lá fora?':
                 var m3 = "Atualmente, o tempo está muito nublado ea probabilidade de chuva é: 0%";
+                sendTextMessage(senderID, m3);
                 break;
             default:
                 sendTextMessage(senderID, messageText);
