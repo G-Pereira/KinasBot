@@ -316,10 +316,10 @@ function receivedMessage(event) {
                 sendTextMessage(senderID, m1);
                 break;
             case 'quanto custa o arroz?':
-                var m2 = "1.º CACAROLA - Arroz Carolino Extra Longo - 1.12€" +
-                    "2.º CIGALA - Arroz Vaporizado - 1.19€" +
-                    "3.º SALUDAES - Arroz Carolino Extra Longo - 1.07€" +
-                    "4.º ORIENTE - Arroz Extra Longo Branqueado Oriente - 1.09€" +
+                var m2 = "1.º CACAROLA - Arroz Carolino Extra Longo - 1.12€\n" +
+                    "2.º CIGALA - Arroz Vaporizado - 1.19€\n" +
+                    "3.º SALUDAES - Arroz Carolino Extra Longo - 1.07€\n" +
+                    "4.º ORIENTE - Arroz Extra Longo Branqueado Oriente - 1.09€\n" +
                     "5.º ORIENTE - Arroz Extra Longo Branqueado Oriente - 1.09€";
                 sendTextMessage(senderID, m2);
                 break;
