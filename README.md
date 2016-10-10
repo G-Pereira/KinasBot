@@ -1,9 +1,9 @@
 # Kinas - A portuguese based bot for general information
 
-Based on a few portuguese information API's(NOS API,SONAE-Bit API,Unbabel API), built on top of [LUIS - LUIS: Language Understanding Intelligent Service](https://www.luis.ai) and based on the [Microsoft Bot Framework](https://dev.botframework.com).
+Based on a few portuguese information API's, built on top of [LUIS - LUIS: Language Understanding Intelligent Service](https://www.luis.ai) and based on the [Microsoft Bot Framework](https://dev.botframework.com).
 
 Built with [node.js](https://nodejs.org/).
-
+API's used: NOS API,SONAE-Bit API,Unbabel API
 Project for [Pixels Camp hackathon](http://pixels.camp)
 
 ## Demo video
