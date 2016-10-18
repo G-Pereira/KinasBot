@@ -1,12 +1,9 @@
 var restify = require('restify');
 var builder = require('botbuilder');
 var request = require("request");
+var parser = require('xml2json');
 
 
-Date.prototype.addHours = function (h) {
-    this.setTime(this.getTime() + (h * 60 * 60 * 1000));
-    return this;
-}
 /*
 function unbabel_submit(ub_text, ub_srclng, ub_destlng, callback2){
 	var options = {
@@ -116,9 +113,39 @@ dialog.matches('TvProgramming', [
         }
     },
     function (session, results) {
-        var finalTime = new Date(session.dialogData.program);
+        var initTime = new Date(session.dialogData.program);
+        var finalTime = new Date(initTime.getTime() + (8 * 60 * 60 * 1000));
+        var rq = "http://services.sapo.pt/EPG/GetChannelByDateInterval/?channelSigla=" + results.response + 
+            "&startDate=" + initTime.getFullYear()+"-"+(initTime.getMonth()+1)+"-"+initTime.getDate()+
+            encodeURIComponent(" " + initTime.getHours()+":"+initTime.getMinutes()+":00")+
+            "&endDate="+ finalTime.getFullYear()+"-"+(finalTime.getMonth()+1)+"-"+finalTime.getDate()+
+             encodeURIComponent(" " + finalTime.getHours()+":"+finalTime.getMinutes()+":00");
+             //console.log(rq)
         if (results.response) {
-            (function seeDay(channel, beginDate) {
+            var resultProg = [];
+            request(rq, function (error, response, res) {
+                    if (!error && response.statusCode == 200) {
+                        var resJson = JSON.parse(parser.toJson(res));
+                        //console.log("to json -> %s", resJson);
+                      
+                       // console.log( resJson.GetChannelByDateIntervalResponse.GetChannelByDateIntervalResult.Programs.Program)
+                       var results = resJson.GetChannelByDateIntervalResponse.GetChannelByDateIntervalResult.Programs.Program;
+
+                       for (var i = 0, len = results.length; i < len; i++) {
+                         str =  results[i].StartTime.split(" ")[1].slice(0,-3) + " " + results[i].Title;
+                         resultProg.push(str);
+                       }
+                       //console.log(JSON.stringify(resultProg));
+                         session.send(JSON.stringify(resultProg).split(",").join("\n\n").replace("[", "").replace("]", ""));
+                        
+                    }
+                    else{
+                        console.log("error on request");
+                    }
+
+            });
+         
+            /*(function seeDay(channel, beginDate) {
                 var day = [];
                 var channels = new Map();
                 request("http://nos-brpx.northeurope.cloudapp.azure.com/EPGRepositories/EPGCatalog.svc/Channel?$format=json", function (error, response, item) {
@@ -200,7 +227,7 @@ dialog.matches('TvProgramming', [
                         session.send(JSON.stringify(day).split(",").join("\n\n").replace("[", "").replace("]", ""));
                     });
                 });
-            } (results.response, finalTime));
+           } (results.response, finalTime)); */
         } else {
             session.send("Something, somewhere, went very wrong. Please try again.");
         }
@@ -247,6 +274,7 @@ dialog.matches('Weather', [
                             });
                     }
                 } else {
+                    session.send("Something, somewhere, went very wrong. Please try again.");
                     console.log(error);
                 }
             });
