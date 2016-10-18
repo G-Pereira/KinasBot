@@ -1,6 +1,6 @@
 # Kinas - A portuguese based bot for general information
 
-Based on a few portuguese information API's, built on top of [LUIS - LUIS: Language Understanding Intelligent Service](https://www.luis.ai) and based on the [Microsoft Bot Framework](https://dev.botframework.com).
+Based on a few portuguese information API's, built on top of [LUIS: Language Understanding Intelligent Service](https://www.luis.ai) and based on the [Microsoft Bot Framework](https://dev.botframework.com).
 
 Built with [node.js](https://nodejs.org/).
 

@@ -3,9 +3,9 @@ var builder = require('botbuilder');
 var request = require("request");
 
 
-Date.prototype.addHours = function(h) {    
-   this.setTime(this.getTime() + (h*60*60*1000)); 
-   return this;   
+Date.prototype.addHours = function (h) {
+    this.setTime(this.getTime() + (h * 60 * 60 * 1000));
+    return this;
 }
 /*
 function unbabel_submit(ub_text, ub_srclng, ub_destlng, callback2){
@@ -63,7 +63,7 @@ var client = new MsTranslator({
 }, true);
 
 var params = {
-    text: 'test', 
+    text: 'test',
     from: 'en',
     to: 'pt'
 };
@@ -74,7 +74,7 @@ var params = {
 
 // Setup Restify Server
 var server = restify.createServer();
-server.listen(process.env.port || process.env.PORT || 3978, function() {
+server.listen(process.env.port || process.env.PORT || 3978, function () {
     console.log('%s listening to %s', server.name, server.url);
 });
 
@@ -88,7 +88,7 @@ server.post('/api/messages', connector.listen());
 
 var model = 'https://api.projectoxford.ai/luis/v1/application?id=5b7519cd-cb65-4df3-9cc0-2cd63dae7e66&subscription-key=79481a16eeee4c569b68d60431dcd4d0';
 var recognizer = new builder.LuisRecognizer(model);
-var dialog = new builder.IntentDialog({ 
+var dialog = new builder.IntentDialog({
     recognizeMode: builder.RecognizeMode.onBegin,
     recognizers: [recognizer]
 });
@@ -143,7 +143,7 @@ dialog.matches('TvProgramming', [
                                         name: entry,
                                         id: channel.ChannelId
                                     });
-                                }else{
+                                } else {
                                     if (entry.length == min.value) {
                                         min.channels.push({
                                             name: entry,
@@ -153,7 +153,7 @@ dialog.matches('TvProgramming', [
                                 }
                             }
                         });
-                        console.log("Found "+min.channels.length+" channels");
+                        console.log("Found " + min.channels.length + " channels");
                         var channelResult = "";
                         if (min.channels.length > 1) {
                             var str = "";
@@ -161,16 +161,16 @@ dialog.matches('TvProgramming', [
                                 str += "\n" + channel.name;
                             });
                             session.send("Please be more specific in the channel, we found this channels:" + str);
-                         
+
                             return;
                         }
                         if (min.channels.length == 1) {
                             channelResult = min.channels[0].id;
                         }
                         if (min.channels.length == 0) {
-                    
+
                             session.send("We couldn't find that channel!");
-                       
+
                             return;
                         }
                     }
@@ -200,7 +200,7 @@ dialog.matches('TvProgramming', [
                         session.send(JSON.stringify(day).split(",").join("\n\n").replace("[", "").replace("]", ""));
                     });
                 });
-            }(results.response, finalTime));
+            } (results.response, finalTime));
         } else {
             session.send("Something, somewhere, went very wrong. Please try again.");
         }
@@ -208,7 +208,7 @@ dialog.matches('TvProgramming', [
 ]);
 
 dialog.matches('Weather', [
-    function(session, args, next) {
+    function (session, args, next) {
         var location = builder.EntityRecognizer.findEntity(args.entities, 'Place');
         var when = builder.EntityRecognizer.resolveTime(args.entities);
         session.dialogData.whenWeather = new Date(when);
@@ -221,28 +221,28 @@ dialog.matches('Weather', [
             });
         }
     },
-    function(session, results) {
+    function (session, results) {
         if (results.response) {
 
-            request('http://maps.google.com/maps/api/geocode/json?address=' + results.response, function(error, response, loc) {
+            request('http://maps.google.com/maps/api/geocode/json?address=' + results.response, function (error, response, loc) {
                 if (!error && response.statusCode == 200) {
-                    if(!session.dialogData.whenWeather){
+                    if (!session.dialogData.whenWeather) {
                         request('https://api.darksky.net/forecast/95387f12434abcb72c983150ec9b7ab7/' + JSON.parse(loc).results[0].geometry.location.lat + "," +
                             JSON.parse(loc).results[0].geometry.location.lng,
-                            function(error, response, item) {
+                            function (error, response, item) {
                                 var msg = "Right now the weather is  " + JSON.parse(item).currently.summary.toLowerCase() + " and the probability of rain is " +
-                                 JSON.parse(item).currently.precipProbability*100 + "%";
+                                    JSON.parse(item).currently.precipProbability * 100 + "%";
                                 session.send(msg);
                             });
                     }
-                    else{
+                    else {
                         var req = 'https://api.darksky.net/forecast/95387f12434abcb72c983150ec9b7ab7/' + JSON.parse(loc).results[0].geometry.location.lat + "," +
-                            JSON.parse(loc).results[0].geometry.location.lng + ","+  session.dialogData.whenWeather.getTime()/1000 + "?exclude=currently,flags";
+                            JSON.parse(loc).results[0].geometry.location.lng + "," + session.dialogData.whenWeather.getTime() / 1000 + "?exclude=currently,flags";
                         console.log(req);
                         request(req,
-                            function(error, response, item) {
-                                var msg = "The weather gonna be " + JSON.parse(item).hourly.summary.toLowerCase().replace(".","") + " and the probability of rain is: " +
-                                JSON.parse(item).hourly.data.precipProbability + "%";
+                            function (error, response, item) {
+                                var msg = "The weather gonna be " + JSON.parse(item).hourly.summary.toLowerCase().replace(".", "") + " and the probability of rain is: " +
+                                    JSON.parse(item).hourly.data.precipProbability + "%";
                                 session.send(msg);
                             });
                     }
@@ -257,7 +257,7 @@ dialog.matches('Weather', [
 ]);
 
 dialog.matches('ProductPrice', [
-    function(session, args, next) {
+    function (session, args, next) {
         var product = builder.EntityRecognizer.findEntity(args.entities, 'Product');
         if (!product) {
             var msg = "What is the product name?";
@@ -268,12 +268,12 @@ dialog.matches('ProductPrice', [
             });
         }
     },
-    function(session, results) {
+    function (session, results) {
         if (results.response) {
             params.text = results.response;
-            client.translate(params, function(err, data) {
+            client.translate(params, function (err, data) {
                 console.log(data);
-                    request("http://apicolpixelcamp.azure-api.net//api/search?query=" + data + "&productsToRetrieve=20", function(error, response, item) {
+                request("http://apicolpixelcamp.azure-api.net//api/search?query=" + data + "&productsToRetrieve=20", function (error, response, item) {
                     if (!error && response.statusCode == 200) {
                         var products = JSON.parse(item).ProductsFound;
                         if (products.length === 0) {
@@ -308,18 +308,22 @@ dialog.matches('ProductPrice', [
 
 dialog.matches('Greeting', [
     function (session) {
-        builder.Prompts.text(session, "Hello! I'm the KinasBot, what is your name?");
+        if (!session.dialogData.name) {
+            builder.Prompts.text(session, "Hello! I'm the KinasBot, what is your name?");
+        }
+        else { next(); }
+
     },
     function (session, results) {
         if (results.response) {
-           session.dialogData.name = results.response;
+            session.dialogData.name = results.response;
         }
-        session.send("How can I be useful, " +  session.dialogData.name + " ?");  
+        session.send("How can I be useful, " + session.dialogData.name + " ?");
     }
 ]);
 
 dialog.onDefault(
     [function (session) {
-            session.send("Sorry, couldn't understand that.");
+        session.send("Sorry, couldn't understand that.");
     }]
 );
