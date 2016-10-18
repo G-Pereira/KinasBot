@@ -4,6 +4,8 @@ Based on a few portuguese information API's, built on top of [LUIS - LUIS: Langu
 
 Built with [node.js](https://nodejs.org/).
 
+API's used: NOS API,SONAE-Bit API,Unbabel API
+
 Project for [Pixels Camp hackathon](http://pixels.camp)
 
 ## Demo video
