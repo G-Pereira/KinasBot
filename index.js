@@ -237,8 +237,9 @@ dialog.matches('TvProgramming', [
 dialog.matches('Weather', [
     function (session, args, next) {
         var location = builder.EntityRecognizer.findEntity(args.entities, 'Place');
-        var when = builder.EntityRecognizer.resolveTime(args.entities);
-        session.dialogData.whenWeather = new Date(when);
+        var when  = builder.EntityRecognizer.resolveTime(args.entities);
+        if(when)
+            session.dialogData.whenWeather = new Date(when);
         if (!location) {
             var msg = "What is the location?";
             builder.Prompts.text(session, msg);
@@ -253,6 +254,7 @@ dialog.matches('Weather', [
 
             request('http://maps.google.com/maps/api/geocode/json?address=' + results.response, function (error, response, loc) {
                 if (!error && response.statusCode == 200) {
+                    console.log(session.dialogData.whenWeather)
                     if (!session.dialogData.whenWeather) {
                         request('https://api.darksky.net/forecast/95387f12434abcb72c983150ec9b7ab7/' + JSON.parse(loc).results[0].geometry.location.lat + "," +
                             JSON.parse(loc).results[0].geometry.location.lng,
@@ -260,17 +262,18 @@ dialog.matches('Weather', [
                                 var msg = "Right now the weather is  " + JSON.parse(item).currently.summary.toLowerCase() + " and the probability of rain is " +
                                     JSON.parse(item).currently.precipProbability * 100 + "%";
                                 session.send(msg);
+                                session.dialogData.whenWeather = undefined;
                             });
                     }
                     else {
                         var req = 'https://api.darksky.net/forecast/95387f12434abcb72c983150ec9b7ab7/' + JSON.parse(loc).results[0].geometry.location.lat + "," +
                             JSON.parse(loc).results[0].geometry.location.lng + "," + session.dialogData.whenWeather.getTime() / 1000 + "?exclude=currently,flags";
-                        console.log(req);
                         request(req,
                             function (error, response, item) {
-                                var msg = "The weather gonna be " + JSON.parse(item).hourly.summary.toLowerCase().replace(".", "") + " and the probability of rain is: " +
-                                    JSON.parse(item).hourly.data.precipProbability + "%";
+                                var msg = "The weather gonna be " + JSON.parse(item).hourly.summary.toLowerCase().replace(".", "") + " and the probability of rain is " +
+                                    JSON.parse(item).hourly.data[0].precipProbability + "%";
                                 session.send(msg);
+                                session.dialogData.whenWeather = undefined;
                             });
                     }
                 } else {
