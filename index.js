@@ -335,7 +335,7 @@ dialog.matches('ProductPrice', [
 ]);
 
 dialog.matches('Greeting', [
-    function (session) {
+    function (session, args, next) {
         if (!session.dialogData.name) {
             builder.Prompts.text(session, "Hello! I'm the KinasBot, what is your name?");
         }
